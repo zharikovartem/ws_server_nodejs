@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #messages {
+            list-style-type: none;
+            padding: 0;
+        }
+        #messages li {
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Чат</h1>
+    <ul id="messages"></ul>
+    <form id="chat-form">
+        <input id="chat-input" type="text" autocomplete="off" placeholder="Введите сообщение..." />
+        <button>Отправить</button>
+    </form>
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script> <!-- Убедитесь, что адрес соответствует вашему серверу -->
+    <script>
+        const socket = io('http://localhost:3000'); // Замените на адрес вашего сервера, если необходимо
+        const form = document.getElementById('chat-form');
+        const input = document.getElementById('chat-input');
+        const messages = document.getElementById('messages');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (input.value) {
+                socket.emit('chat message', input.value);
+                input.value = '';
+            }
+        });
+
+        socket.on('chat message', (msg) => {
+            const li = document.createElement('li');
+            li.textContent = msg;
+            messages.appendChild(li);
+        });
+    </script>
+</body>
+</html>
