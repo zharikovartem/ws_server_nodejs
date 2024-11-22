@@ -28,9 +28,9 @@
         <input id="chat-input" type="text" autocomplete="off" placeholder="Введите сообщение..." />
         <button>Отправить</button>
     </form>
-    <script src="http://localhost:3000/socket.io/socket.io.js"></script> <!-- Убедитесь, что адрес соответствует вашему серверу -->
+    <script src="http://localhost:2345/socket.io/socket.io.js"></script>
     <script>
-        const socket = io('http://localhost:3000'); // Замените на адрес вашего сервера, если необходимо
+        const socket = io('http://localhost:2345');
         const form = document.getElementById('chat-form');
         const input = document.getElementById('chat-input');
         const messages = document.getElementById('messages');

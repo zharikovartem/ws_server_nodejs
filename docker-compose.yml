@@ -3,8 +3,8 @@ services:
   websocket-server:
     build: .
     ports:
-      - "3000:3000"
+      - "${PORT}:${PORT}"
     volumes:
       - .:/app
-    environment:
-      - PORT=3000
+    env_file:
+      - .env
