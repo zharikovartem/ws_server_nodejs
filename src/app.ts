@@ -33,6 +33,5 @@ io.on('connection', (socket) => {
 })
 
 httpServer.listen(envConfig.port, () => {
-    console.log('envConfig', envConfig)
     console.log(`Server running on port ${envConfig.port}`)
 })

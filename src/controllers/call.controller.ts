@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
-import { Logger } from '../services/logger.service';
-// import { Logger } from './logger'
+import { Request, Response } from 'express'
+import { Logger } from '../services/logger.service'
+import { azureConfig } from '../config/azure.config';
 
 interface IncomingCallBody {
     callerId: string;

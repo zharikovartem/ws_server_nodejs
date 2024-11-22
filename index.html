@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +10,12 @@
             font-family: Arial, sans-serif;
             margin: 20px;
         }
+
         #messages {
             list-style-type: none;
             padding: 0;
         }
+
         #messages li {
             padding: 8px;
             margin: 5px 0;
@@ -21,11 +24,13 @@
         }
     </style>
 </head>
+
 <body>
     <h1>Чат</h1>
     <ul id="messages"></ul>
     <form id="chat-form">
-        <input id="chat-input" type="text" autocomplete="off" placeholder="Введите сообщение..." />
+        <input id="event-input" type="text" autocomplete="off" placeholder="EVENT NAME" value="EV_TEST"/>
+        <input id="chat-input" type="text" autocomplete="off" placeholder="Введите сообщение..." value="123"/>
         <button>Отправить</button>
     </form>
     <script src="http://localhost:2345/socket.io/socket.io.js"></script>
@@ -33,21 +38,38 @@
         const socket = io('http://localhost:2345');
         const form = document.getElementById('chat-form');
         const input = document.getElementById('chat-input');
+        const event = document.getElementById('event-input');
         const messages = document.getElementById('messages');
 
+        // form.addEventListener('submit', (e) => {
+        //     e.preventDefault();
+        //     if (input.value) {
+        //         socket.emit(event.value ?? 'chat message', input.value);
+        //         input.value = '';
+        //     }
+        // });
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             if (input.value) {
-                socket.emit('chat message', input.value);
+                socket.emit(event.value ?? 'chat message', {
+                    message: input.value,
+                    timestamp: new Date()
+                });
                 input.value = '';
             }
         });
 
         socket.on('chat message', (msg) => {
             const li = document.createElement('li');
-            li.textContent = msg;
+            li.textContent = msg.message;
             messages.appendChild(li);
         });
+
+        socket.onAny((event, ...args) => {
+            console.log(event, args);
+        });
+
     </script>
 </body>
+
 </html>

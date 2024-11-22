@@ -16,6 +16,14 @@ export class WebSocketController {
             this.socketService.broadcastMessage(socket, msg)
         })
 
+        socket.onAny(async (event, ...args) => {
+            console.log('onAny', event, args)
+            this.socketService.broadcastMessage(socket, {
+                event: event,
+                data: args
+            })
+        })
+
         socket.on('disconnect', () => {
             console.log('User disconnected')
         })
